@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Marked from "marked";
+import "./App.css";
 
 function App() {
+  const [text, setText] = useState("# Exemple de titre, désolé ce Prévisualisateur n'est pas stylé ");
+
+  const changeInputHandler = (e) => {
+    setText(e.target.value);
+    console.log(e.target.value);
+  };
+  const markdownToHTML = () => {
+    return { __html: Marked(text) };
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="root">
+      <div className="areaDiv">
+        <textarea
+          rows="32"
+          cols="60"
+          value={text}
+          onChange={(e) => changeInputHandler(e)}
+        />
+      </div>
+      <div dangerouslySetInnerHTML={markdownToHTML()}></div>
     </div>
   );
 }
